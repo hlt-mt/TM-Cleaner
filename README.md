@@ -1,5 +1,5 @@
 # TM-Cleaner
-This repository contains the software to run the translation memory (TM) cleaning service developed during the CEF Data MarketPlace project.
+This repository contains the software to run the translation memory (TM) cleaning service developed during the CEF Data MarketPlace project](https://www.datamarketplace.eu). A service based on this tool is offered by the TAUS Data MarketPlace platform.
 
 The goal of the tool is to remove wrong or dirty translation units (TU) from the TMs uploaded to the Marketplace. This is obtained by running a software able to extract features from the source and target-language sides of a TU and to take a decision about the overall quality of the TU.
 
