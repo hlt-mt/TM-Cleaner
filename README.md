@@ -27,6 +27,8 @@ The tool is accessible by an API that allows a user to process one or multiple T
 
 The Docker image of the code is available [here](https://drive.google.com/file/d/1PCv0kLT5K0adANgAZUqQeQpbHaKlxgu_/view?usp=sharing) (around 860 MB)
 
+No specific hardware or software is required (only the optional "email" functionality requires an email sending service running on the host)
+
 Once the Docker image has been downloaded, it has to be added to your docker environment
 ```bash
 $ docker load < image.cleaning_service.tar.gz
