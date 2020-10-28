@@ -75,14 +75,14 @@ Parameters:
 * tu (string, mandatory): tab-separated source sentence and target sentence;
 * langpair (string, mandatory): dash-separated source and target languages encoded with a two-char ISO 639-1 code (e.g. "en-it");
 * power (integer, optional): it regulates the strenght of the cleaning process, with an integer in the set {0,1,2}, meaning respectively {low,average,high} strenght; provided values changes the BiCleaner threshold (respectively {0,0.4,0.7}); default value is 0;
-* verbosity (integer, optional): value 0 means that only acceptance scores are provided (0 means reject, 1 means accept); value 1 means that also the TU are included in the respose; default value is 0;
+* verbosity (integer, optional): one of 0 (default) or 1; value 0 means that only decision scores are provided (0: dirty, 1: clean); value 1 means that also the TU are included in the response;
 * email (string, optional): an email address to which the results are to be sent;
 
 Response:
 
 The service sends a reply in JSON format to either acknowledge the success or to report an error. It include the attributes "status" and "info".
 
-Success: the attribute "status" is 0 and the attribute "info" contains the acceptance score (0 means reject, 1 means accept). If verbosity is 1, then the input TU is also included.
+Success: the attribute "status" is 0 and the attribute "info" contains the decision score (0: dirty, 1: clean). If verbosity is 1, then the input TU is also included.
 
 Failure: the attribute "status" is 1 and the attribute "info" contains the error description.
 
