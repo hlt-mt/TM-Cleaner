@@ -1,7 +1,7 @@
 # TM-Cleaner
-This repository contains the software to run the translation memory (TM) cleaning service developed during the CEF Data MarketPlace project](https://www.datamarketplace.eu). A service based on this tool is offered by the TAUS Data MarketPlace platform.
+This repository contains the software to run the translation memory (TM) cleaning service developed within the [CEF Data MarketPlace project](https://www.datamarketplace.eu). A service based on this tool is offered by the TAUS Data MarketPlace platform.
 
-The goal of the tool is to remove wrong or dirty translation units (TU) from the TMs uploaded to the Marketplace. This is obtained by running a software able to extract features from the source and target-language sides of a TU and to take a decision about the overall quality of the TU.
+The goal of the tool is to remove wrong or dirty translation units (TUs) from the TMs uploaded to the Marketplace. This is obtained by running a software able to extract features from the source and target language sides of a TU and to take a decision about the overall quality of the TU.
 
 The identification of “bad” TUs is a multifaceted problem. First, it deals with the recognition of a variety of errors. These include:
 
@@ -16,9 +16,9 @@ The identification of “bad” TUs is a multifaceted problem. First, it deals w
 
 
 ## The tool
-The tool includes the [BiCleaner](https://github.com/bitextor/bicleaner) software. BiCleaner applies a two step process for deciding if a TU is correct or wrong. Initialy, it use a set of hard-coded rules such as languages verification, encoding errors, very different lengths in parallel sentences, etc. If a TU passes these rules, lexical and shallow features are extracted from the source and target sentences and then a classifier assignes a score from 0 (dirty) to 1 (clean). A cutting-threshold on the classifier score is used to take the final decision.
+The tool includes the [BiCleaner](https://github.com/bitextor/bicleaner) software. BiCleaner applies a two step process for deciding if a TU is correct or wrong. Initially, it uses a set of hard-coded rules such as languages verification, encoding errors, very different lengths in parallel sentences, etc. If a TU passes these rules, lexical and shallow features are extracted from the source and target sentences and then a classifier assignes a score from 0 (dirty) to 1 (clean). A cutting-threshold on the classifier score is used to take the final decision.
 
-BiCleaner gives the possibility to use several classification algorithms such as svm, nn, adaboost, random forest, extremelly randomized tree, etc. The classifier should be trained and models are avialable covering 30 languages (3 Spanish-*, 1 German-Italian, 26 English-*).
+BiCleaner gives the possibility to use several classification algorithms such as svm, nn, adaboost, random forest, extremely randomized trees, etc. The classifier should be trained and models are available covering 30 languages (3 Spanish-*, 1 German-Italian, 26 English-*).
 
 The tool is accessible by an API that allows a user to process one or multiple TUs at the time. More details about the API specifications are available below.
 
@@ -39,7 +39,7 @@ To start the service, run the following command:
 $ docker run --rm -it --net=host cleaning_service
 ```
 
-Them wait until the process prints the message
+Then wait until the process prints the message
 ```bash
 web service ready at port 8081
 ```
@@ -67,7 +67,7 @@ produces the response:
 
 The web service is exposed as a REST API, where REST is to be interpreted in the weak meaning (the web service here described does not use WSDL/SOAP but is defined directly over the HTTP protocol).
 
-Two endpoints are exposed, one at the level of a TU and one at the level of a file containing TUs.
+Two endpoints are exposed, one at the level of TU and one at the level of file containing TUs.
 
 ### /cleaning_service (endpoint at TU level)
 
@@ -82,7 +82,7 @@ Parameters:
 
 Response:
 
-The service sends a reply in JSON format to either acknowledge the success or to report an error. It include the attributes "status" and "info".
+The service sends a reply in JSON format to either acknowledge the success or to report an error. It includes the attributes "status" and "info".
 
 Success: the attribute "status" is 0 and the attribute "info" contains the decision score (0: dirty, 1: clean). If verbosity is 1, then the input TU is also included.
 
