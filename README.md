@@ -16,27 +16,27 @@ The identification of “bad” TUs is a multifaceted problem. First, it deals w
 
 
 ## The tool
-The tool includes the [BiCleaner](https://github.com/bitextor/bicleaner) software. BiCleaner applies a two step process for deciding if a TU is correct or wrong. Initially, it uses a set of hard-coded rules such as languages verification, encoding errors, very different lengths in parallel sentences, etc. If a TU passes these rules, lexical and shallow features are extracted from the source and target sentences and then a classifier assignes a score from 0 (dirty) to 1 (clean). A cutting-threshold on the classifier score is used to take the final decision.
+The tool is based on the sentence embeddings provided by the [LASER suite](https://github.com/facebookresearch/LASER). Given a TU, the sentence embeddings are extracted for both the source and target sentences, each with respect to their own language. Then the cosyne similarity between the source embeddings and the target embeddings is computed: if it overcomes a threshold then the TU is labeled as clean, otherwise as dirty.
 
-BiCleaner gives the possibility to use several classification algorithms such as svm, nn, adaboost, random forest, extremely randomized trees, etc. The classifier should be trained and models are available covering 30 languages (3 Spanish-*, 1 German-Italian, 26 English-*).
+It is worth noticing here that LASER is able to manage at least 93 language, giving the tool the ability to support multilinguality.
 
 The tool is accessible by an API that allows a user to process one or multiple TUs at the time. More details about the API specifications are available below.
 
 
 ## Installation and Usage
 
-The Docker image of the code is available [here](https://drive.google.com/file/d/1PCv0kLT5K0adANgAZUqQeQpbHaKlxgu_/view?usp=sharing) (around 860 MB)
+The Docker image of the code is available [here](https://drive.google.com/file/d/1pNMN7EIaWLefwTljC6KbOlw_NlffH_sX/view?usp=sharing) (around 2 GB)
 
 No specific hardware or software is required in addition to a working "docker" installation (only the optional "email" functionality requires an email sending service running on the host)
 
 Once the Docker image has been downloaded, it has to be added to your docker environment
 ```bash
-$ docker load < image.cleaning_service.tar.gz
+$ docker load < image.cleaning_service_y2.tar.gz
 ```
 
 To start the service, run the following command:
 ```bash
-$ docker run --rm -it --net=host cleaning_service
+$ docker run --rm -it --net=host cleaning_service_y2
 ```
 
 Then wait until the process prints the message
@@ -46,8 +46,8 @@ web service ready at port 8081
 this means it is ready to accept requests.
 
 Requests can be issued at the following URLs:
-* http://localhost:8081/cleaning_service.php
-* http://${PUBLIC-IP}:8081/cleaning_service.php
+* http://localhost:8081/cleaning_service
+* http://${PUBLIC-IP}:8081/cleaning_service
 
 
 ### Example
@@ -76,7 +76,7 @@ HTTP Method: POST
 Parameters:
 * tu (string, mandatory): tab-separated source sentence and target sentence;
 * langpair (string, mandatory): dash-separated source and target languages encoded with a two-char ISO 639-1 code (e.g. "en-it");
-* power (integer, optional): it regulates the strenght of the cleaning process, with an integer in the set {0,1,2}, meaning respectively {low,average,high} strenght; provided values changes the BiCleaner threshold (respectively {0,0.4,0.7}); default value is 0;
+* power (integer, optional): it regulates the strenght of the cleaning process, with an integer in the set {0,1,2}, meaning respectively {low,average,high} strenght; provided values changes the threshold for the cosyne similarity (respectively {0.7,0.8,0.9}); default value is 0.7;
 * verbosity (integer, optional): one of 0 (default) or 1; value 0 means that only decision scores are provided (0: dirty, 1: clean); value 1 means that also the TU are included in the response;
 * email (string, optional): an email address to which the results are to be sent;
 
@@ -104,7 +104,7 @@ To test the tool, a web graphical interface is made available in the Docker. It 
 
 ## Credits
 
-FBK developed the Cleaning Service (the web service, interface with BiCleaner and web GUI)
+FBK developed the Cleaning Service (the web service and web GUI)
 
 
 ## Contacts
